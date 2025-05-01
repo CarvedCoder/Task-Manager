@@ -3,17 +3,20 @@ project(TaskManager)
 
 # Find GLFW package (this is the modern way)
 find_package(glfw3 REQUIRED)
-
-# If the above doesn't work, you can try pkg-config (common on Linux)
-# find_package(PkgConfig REQUIRED)
-# pkg_search_module(GLFW REQUIRED glfw3)
+file(COPY fonts DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 # Create the executable
-add_executable(Task_Manager todo.c)
+add_executable(Task_Manager TaskManager.c)
 
 # Link GLFW to your program
-target_link_libraries(Task_Manager glfw)
-
+target_link_libraries(Task_Manager 
+    glfw
+    GL
+    leif
+    clipboard
+    xcb
+    m
+)
 # On Linux, you may need additional OpenGL libraries
 if(UNIX AND NOT APPLE)
     target_link_libraries(Task_Manager GL X11 pthread Xrandr Xi dl)
